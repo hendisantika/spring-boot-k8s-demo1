@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: demo-k8s
+    version: @project.version@
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
