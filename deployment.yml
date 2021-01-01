@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: demo-app
-          image: hendiasantika/demo-k8s:v1
+          image: hendisantika/k8s:0.0.1
           ports:
             - containerPort: 8080
 ---
