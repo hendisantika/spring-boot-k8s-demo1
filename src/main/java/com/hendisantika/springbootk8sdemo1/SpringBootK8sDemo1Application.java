@@ -3,10 +3,14 @@ package com.hendisantika.springbootk8sdemo1;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
@@ -30,5 +34,12 @@ class Application {
 class HelloResource {
     @Autowired
     private Environment env;
+
+    @GetMapping("/hello/{name}")
+    public ResponseEntity<String> sayHello(@PathVariable String name) {
+        String greeting = String.format("Hey %s !", name);
+        log.info("TraceId :{} - Receive param {}", MDC.get("X-B3-TraceId"), name);
+        return ResponseEntity.ok(greeting);
+    }
 
 }
