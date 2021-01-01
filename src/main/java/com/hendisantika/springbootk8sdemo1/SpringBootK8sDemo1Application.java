@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.Status;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -42,4 +44,19 @@ class HelloResource {
         return ResponseEntity.ok(greeting);
     }
 
+    @GetMapping("health")
+    public ResponseEntity<Health> customHealth() {
+        String appName = env.getProperty("spring.application.name");
+        String appVersion = env.getProperty("spring.application.version");
+        Health build =
+                Health.status(Status.UP)
+                        .withDetail("info",
+                                Application.builder()
+                                        .name(appName)
+                                        .version(appVersion)
+                                        .build()
+                        )
+                        .build();
+        return ResponseEntity.ok(build);
+    }
 }
