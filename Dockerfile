@@ -1,4 +1,4 @@
-FROM openjdk:11.0-jre-stretch
+FROM bellsoft/liberica-openjdk-debian:21
 MAINTAINER HENDI SANTIKA <hendisantika@yahoo.co.id>
 
 WORKDIR /usr/share/demo-k8s
